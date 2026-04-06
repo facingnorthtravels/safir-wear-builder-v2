@@ -137,10 +137,6 @@ function BuilderContent() {
     <div className="min-h-screen bg-bg">
       <div className="max-w-7xl mx-auto px-4 py-10">
         <div className="flex gap-10 items-start">
-          {/* Preview — hero column */}
-          <div className="hidden lg:block w-[480px] flex-shrink-0">
-            <PreviewPanel />
-          </div>
           {/* Steps column */}
           <div className="flex-1 min-w-0">
             <StepNav />
@@ -158,6 +154,10 @@ function BuilderContent() {
                 Step 6 — Contact details coming soon
               </div>
             )}
+          </div>
+          {/* Preview — hero column */}
+          <div className="hidden lg:block w-[480px] flex-shrink-0">
+            <PreviewPanel />
           </div>
         </div>
       </div>
