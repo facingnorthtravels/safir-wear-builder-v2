@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full antialiased">
       <body className="min-h-full flex flex-col bg-bg text-text-primary font-sans">
-        <header className="flex items-center justify-between px-6 md:px-10 py-5 border-b border-border bg-bg">
+        <header className="flex items-center justify-between px-6 md:px-10 h-14 border-b border-border bg-bg flex-shrink-0">
           <Link href="/" className="text-text-primary font-black text-lg tracking-tight">
             SW / SAFIR WEAR
           </Link>
@@ -32,10 +32,7 @@ export default function RootLayout({
             Get a Quote
           </Link>
         </header>
-        <main className="flex-1">{children}</main>
-        <footer className="px-6 md:px-10 py-6 border-t border-border text-text-muted text-sm">
-          © 2026 Safir Wear
-        </footer>
+        <main className="flex-1 min-h-0">{children}</main>
       </body>
     </html>
   );
