@@ -7,9 +7,9 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { productSlug, productName, colourName, colourHex, techniqueName, placementZoneName } = body
+    const { productSlug, productName, colourName, colourHex, techniqueName, placementZoneName, logoDataUrl } = body
 
-    const cacheKey = `${productSlug}-${colourHex}-${techniqueName}-${placementZoneName}`
+    const cacheKey = `${productSlug}-${colourHex}-${techniqueName}-${placementZoneName}-${logoDataUrl ? 'logo' : 'nologo'}`
       .toLowerCase().replace(/[^a-z0-9-]/g, '-')
 
     const { data: cached } = await adminClient
@@ -30,10 +30,14 @@ export async function POST(request: NextRequest) {
     const imageBuffer = await imageResponse.arrayBuffer()
     const base64Image = Buffer.from(imageBuffer).toString('base64')
 
+    const logoInstruction = logoDataUrl
+      ? `3. Apply the logo from the second image as a realistic ${techniqueName} decoration on the ${placementZoneName} of the shirt. The logo must look genuinely applied onto the fabric — preserve its shape, colours and proportions. It should look like it was ${techniqueName.toLowerCase()} onto the garment, not pasted on.`
+      : `3. Add a realistic ${techniqueName} decoration on the ${placementZoneName} of the shirt. Show the text "BRAND" in a clean minimal font that looks genuinely ${techniqueName.toLowerCase()} onto the fabric.`
+
     const prompt = `Edit this fashion product photograph. Make these exact changes:
 1. Change the t-shirt colour to ${colourName} (hex ${colourHex}). Preserve all fabric texture, folds, shadows and lighting. Must look like a real garment, not a filter.
 2. Remove any existing logo or graphic from the shirt completely.
-3. Add a realistic ${techniqueName} decoration on the ${placementZoneName} of the shirt. Show the text "BRAND" in a clean minimal font that looks genuinely ${techniqueName.toLowerCase()} onto the fabric.
+${logoInstruction}
 4. Keep everything else completely unchanged — model, pose, background, trousers, shoes, lighting.
 5. Photorealistic fashion photography quality only.`
 
@@ -44,10 +48,19 @@ export async function POST(request: NextRequest) {
       } as any,
     })
 
-    const result = await model.generateContent([
+    const contentParts: any[] = [
       { inlineData: { mimeType: 'image/jpeg', data: base64Image } },
-      { text: prompt }
-    ])
+    ]
+
+    if (logoDataUrl) {
+      const logoBase64 = logoDataUrl.split(',')[1]
+      const logoMime = logoDataUrl.split(';')[0].split(':')[1]
+      contentParts.push({ inlineData: { mimeType: logoMime, data: logoBase64 } })
+    }
+
+    contentParts.push({ text: prompt })
+
+    const result = await model.generateContent(contentParts)
 
     const parts = result.response.candidates?.[0]?.content?.parts ?? []
     console.log('Gemini parts:', parts.map((p: any) => ({

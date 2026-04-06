@@ -41,14 +41,24 @@ export default function Step4Decoration() {
     return tech.price_add_50
   }
 
-  function handleContinue() {
+  async function handleContinue() {
     const tech = techniques.find(t => t.id === selectedTechId)
     const zone = zones.find(z => z.id === selectedZoneId)
     if (!tech || !zone) return
-    if (logoFile) (window as any).__safirLogoFile = logoFile
+
+    let logoFileUrl: string | null = state.logoFileUrl ?? null
+    if (logoFile) {
+      logoFileUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(reader.result as string)
+        reader.onerror = reject
+        reader.readAsDataURL(logoFile)
+      })
+    }
+
     update({ techniqueId: tech.id, techniqueName: tech.name,
       techniqueAdd: getPriceAdd(tech), placementZoneId: zone.id,
-      placementZoneName: zone.name })
+      placementZoneName: zone.name, logoFileUrl })
     nextStep()
   }
 

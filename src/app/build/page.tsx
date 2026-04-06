@@ -45,6 +45,7 @@ function PreviewPanel() {
           colourHex: state.colourHex,
           techniqueName: state.techniqueName,
           placementZoneName: state.placementZoneName,
+          logoDataUrl: state.logoFileUrl ?? null,
         })
       })
       const data = await res.json()
@@ -55,7 +56,7 @@ function PreviewPanel() {
   }
 
   return (
-    <div className="w-80 flex-shrink-0">
+    <div className="w-full">
       <div className="sticky top-6 bg-raised border border-border rounded-card p-5 flex flex-col gap-4">
         <p className="text-xs text-text-muted uppercase tracking-widest font-medium">Your build</p>
 
@@ -134,8 +135,13 @@ function BuilderContent() {
   const { state } = useBuilder()
   return (
     <div className="min-h-screen bg-bg">
-      <div className="max-w-6xl mx-auto px-4 py-10">
-        <div className="flex gap-8 items-start">
+      <div className="max-w-7xl mx-auto px-4 py-10">
+        <div className="flex gap-10 items-start">
+          {/* Preview — hero column */}
+          <div className="hidden lg:block w-[480px] flex-shrink-0">
+            <PreviewPanel />
+          </div>
+          {/* Steps column */}
           <div className="flex-1 min-w-0">
             <StepNav />
             {state.step === 1 && <Step1Product />}
@@ -152,9 +158,6 @@ function BuilderContent() {
                 Step 6 — Contact details coming soon
               </div>
             )}
-          </div>
-          <div className="hidden lg:block">
-            <PreviewPanel />
           </div>
         </div>
       </div>
