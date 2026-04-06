@@ -28,49 +28,33 @@ export default function Step4Decoration() {
     load()
   }, [state.productId])
 
-  // Update preview zone in real time
   useEffect(() => {
     if (selectedZoneId !== state.placementZoneId) {
       const zone = zones.find(z => z.id === selectedZoneId)
       update({ placementZoneId: selectedZoneId, placementZoneName: zone?.name ?? null })
     }
-  }, [selectedZoneId])
+  }, [selectedZoneId, zones])
 
-  function getTechPriceAdd(tech: Technique) {
+  function getPriceAdd(tech: Technique) {
     if (state.quantity === 100) return tech.price_add_100
     if (state.quantity === 500) return tech.price_add_500
     return tech.price_add_50
-  }
-
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0] ?? null
-    setLogoFile(file)
-    if (file) {
-      (window as any).__safirLogoFile = file
-    }
   }
 
   function handleContinue() {
     const tech = techniques.find(t => t.id === selectedTechId)
     const zone = zones.find(z => z.id === selectedZoneId)
     if (!tech || !zone) return
-    update({
-      techniqueId: tech.id,
-      techniqueName: tech.name,
-      techniqueAdd: getTechPriceAdd(tech),
-      placementZoneId: zone.id,
-      placementZoneName: zone.name,
-    })
+    if (logoFile) (window as any).__safirLogoFile = logoFile
+    update({ techniqueId: tech.id, techniqueName: tech.name,
+      techniqueAdd: getPriceAdd(tech), placementZoneId: zone.id,
+      placementZoneName: zone.name })
     nextStep()
   }
 
-  const canContinue = !!selectedTechId && !!selectedZoneId
-
   if (loading) return (
     <div className="flex flex-col gap-3">
-      {Array.from({ length: 4 }).map((_, i) => (
-        <div key={i} className="bg-raised border border-border rounded-card h-20 animate-pulse" />
-      ))}
+      {Array.from({length:3}).map((_,i)=><div key={i} className="bg-raised border border-border rounded-card h-20 animate-pulse"/>)}
     </div>
   )
 
@@ -80,33 +64,20 @@ export default function Step4Decoration() {
         <h2 className="text-white text-lg font-medium mb-1">Decoration</h2>
         <p className="text-text-muted text-sm">Choose how your logo or design will be applied.</p>
       </div>
-
-      {/* Technique selector */}
       <div>
         <p className="text-white text-sm font-medium mb-3">Technique</p>
         <div className="grid grid-cols-2 gap-3">
           {techniques.map(tech => {
+            const add = getPriceAdd(tech)
             const isSelected = selectedTechId === tech.id
-            const add = getTechPriceAdd(tech)
             return (
-              <button
-                key={tech.id}
-                onClick={() => setSelectedTechId(tech.id)}
+              <button key={tech.id} onClick={() => setSelectedTechId(tech.id)}
                 className={`text-left p-4 rounded-card border transition-all
-                  ${isSelected
-                    ? 'border-accent bg-accent/5'
-                    : 'border-border bg-raised hover:border-white/20'
-                  }`}
-              >
+                  ${isSelected ? 'border-accent bg-accent/5' : 'border-border bg-raised hover:border-white/20'}`}>
                 <p className="text-white text-sm font-medium mb-1">{tech.name}</p>
-                {tech.description && (
-                  <p className="text-text-muted text-xs mb-2 line-clamp-2">{tech.description}</p>
-                )}
+                {tech.description && <p className="text-text-muted text-xs mb-2 line-clamp-2">{tech.description}</p>}
                 <span className={`text-xs px-2 py-0.5 rounded-full border
-                  ${add === 0
-                    ? 'border-green-500/30 text-green-400 bg-green-400/10'
-                    : 'border-amber-500/30 text-amber-400 bg-amber-400/10'
-                  }`}>
+                  ${add === 0 ? 'border-green-500/30 text-green-400 bg-green-400/10' : 'border-amber-500/30 text-amber-400 bg-amber-400/10'}`}>
                   {add === 0 ? 'Included' : `+£${add.toFixed(2)} / unit`}
                 </span>
               </button>
@@ -114,45 +85,27 @@ export default function Step4Decoration() {
           })}
         </div>
       </div>
-
-      {/* Placement zone selector */}
       <div>
         <p className="text-white text-sm font-medium mb-3">Placement</p>
         <div className="flex flex-wrap gap-2">
           {zones.map(zone => (
-            <button
-              key={zone.id}
-              onClick={() => setSelectedZoneId(zone.id)}
+            <button key={zone.id} onClick={() => setSelectedZoneId(zone.id)}
               className={`px-4 py-2 rounded-full text-sm border transition-all
-                ${selectedZoneId === zone.id
-                  ? 'bg-accent border-accent text-white'
-                  : 'border-border text-text-muted hover:border-white/30 hover:text-white'
-                }`}
-            >
+                ${selectedZoneId === zone.id ? 'bg-accent border-accent text-white' : 'border-border text-text-muted hover:border-white/30 hover:text-white'}`}>
               {zone.name}
             </button>
           ))}
         </div>
-        {selectedZoneId && (
-          <p className="text-text-muted text-xs mt-2">
-            Zone highlighted on the garment preview →
-          </p>
-        )}
+        {selectedZoneId && <p className="text-text-muted text-xs mt-2">Zone highlighted on garment preview →</p>}
       </div>
-
-      {/* Logo upload */}
       <div>
         <p className="text-white text-sm font-medium mb-3">Your logo</p>
-        <div
-          onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-border rounded-card p-8 text-center cursor-pointer hover:border-white/30 transition-colors"
-        >
+        <div onClick={() => fileInputRef.current?.click()}
+          className="border-2 border-dashed border-border rounded-card p-8 text-center cursor-pointer hover:border-white/30 transition-colors">
           {logoFile ? (
             <div>
               <p className="text-white text-sm font-medium">{logoFile.name}</p>
-              <p className="text-text-muted text-xs mt-1">
-                {(logoFile.size / 1024).toFixed(0)}KB · Click to change
-              </p>
+              <p className="text-text-muted text-xs mt-1">{(logoFile.size/1024).toFixed(0)}KB · Click to change</p>
             </div>
           ) : (
             <div>
@@ -161,31 +114,16 @@ export default function Step4Decoration() {
             </div>
           )}
         </div>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept=".svg,.png,.pdf"
-          className="hidden"
-          onChange={handleFileChange}
-        />
-        <p className="text-text-muted text-xs mt-2">
-          Optional — you can also email it to us after submitting.
-        </p>
+        <input ref={fileInputRef} type="file" accept=".svg,.png,.pdf" className="hidden" onChange={e => {
+          const f = e.target.files?.[0] ?? null
+          setLogoFile(f)
+        }} />
+        <p className="text-text-muted text-xs mt-2">Optional — you can also email it after submitting.</p>
       </div>
-
       <div className="flex gap-3">
-        <button
-          onClick={() => goToStep(3)}
-          className="px-4 py-3 rounded-lg text-sm text-text-muted hover:text-white transition-colors"
-        >
-          ← Back
-        </button>
-        <button
-          onClick={handleContinue}
-          disabled={!canContinue}
-          className="flex-1 py-3 rounded-lg text-sm font-medium text-white bg-accent transition-opacity
-            disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90"
-        >
+        <button onClick={() => goToStep(3)} className="px-4 py-3 rounded-lg text-sm text-text-muted hover:text-white transition-colors">← Back</button>
+        <button onClick={handleContinue} disabled={!selectedTechId || !selectedZoneId}
+          className="flex-1 py-3 rounded-lg text-sm font-medium text-white bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
           Continue →
         </button>
       </div>

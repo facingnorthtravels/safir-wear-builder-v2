@@ -12,21 +12,17 @@ const STEPS = [
 
 export default function StepNav() {
   const { state, goToStep } = useBuilder()
-
   return (
     <>
-      {/* Desktop */}
       <div className="hidden sm:flex items-center gap-0 mb-8">
         {STEPS.map((s, i) => {
           const done = s.n < state.step
           const active = s.n === state.step
-          const clickable = done
-
           return (
             <div key={s.n} className="flex items-center">
               <button
-                onClick={() => clickable && goToStep(s.n)}
-                disabled={!clickable}
+                onClick={() => done && goToStep(s.n)}
+                disabled={!done}
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm transition-colors
                   ${active ? 'text-white font-medium' : ''}
                   ${done ? 'text-accent cursor-pointer hover:opacity-80' : ''}
@@ -49,15 +45,9 @@ export default function StepNav() {
           )
         })}
       </div>
-
-      {/* Mobile */}
       <div className="flex sm:hidden items-center justify-between mb-6">
-        <span className="text-text-muted text-sm">
-          Step {state.step} of {STEPS.length}
-        </span>
-        <span className="text-white font-medium text-sm">
-          {STEPS[state.step - 1]?.label}
-        </span>
+        <span className="text-text-muted text-sm">Step {state.step} of {STEPS.length}</span>
+        <span className="text-white font-medium text-sm">{STEPS[state.step - 1]?.label}</span>
       </div>
     </>
   )
