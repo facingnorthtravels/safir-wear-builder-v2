@@ -75,10 +75,10 @@ function PreviewPanel() {
             </div>
           )}
           {generating && (
-            <div className="absolute inset-0 bg-black/75 flex flex-col items-center justify-center gap-3">
-              <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-              <p className="text-white text-sm font-medium">Generating preview...</p>
-              <p className="text-white/50 text-xs">Usually 5–10 seconds</p>
+            <div className="absolute inset-0 bg-bg/80 flex flex-col items-center justify-center gap-3">
+              <div className="w-8 h-8 border-2 border-border border-t-accent rounded-full animate-spin" />
+              <p className="text-text-primary text-sm font-medium">Generating preview...</p>
+              <p className="text-text-muted text-xs">Usually 5–10 seconds</p>
             </div>
           )}
         </div>
@@ -86,7 +86,7 @@ function PreviewPanel() {
         {/* Generate button */}
         {canGenerate && !generating && (
           <button onClick={handleGenerate}
-            className="w-full py-2.5 rounded-lg text-sm font-medium border border-accent text-accent hover:bg-accent hover:text-white transition-all duration-150">
+            className="w-full py-2.5 rounded-lg text-sm font-medium border border-accent text-accent hover:bg-accent hover:text-bg transition-all duration-150">
             {generatedImageUrl ? '↺ Regenerate preview' : '✦ Generate AI preview'}
           </button>
         )}
@@ -105,7 +105,7 @@ function PreviewPanel() {
           ].map(({ label, value }) => (
             <div key={label} className="flex justify-between gap-2">
               <span className="text-text-muted flex-shrink-0">{label}</span>
-              <span className={`text-right truncate ${value ? 'text-white' : 'text-text-muted'}`}>{value ?? '—'}</span>
+              <span className={`text-right truncate ${value ? 'text-text-primary font-medium' : 'text-text-muted'}`}>{value ?? '—'}</span>
             </div>
           ))}
         </div>
@@ -114,7 +114,7 @@ function PreviewPanel() {
         <div className="border-t border-border pt-3">
           {state.basePriceGbp > 0 ? (
             <>
-              <p className="text-2xl font-medium text-white">£{estimatedTotal.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</p>
+              <p className="text-2xl font-medium text-text-primary">£{estimatedTotal.toLocaleString('en-GB', { minimumFractionDigits: 2 })}</p>
               <p className="text-xs text-text-muted mt-1">£{unitPrice.toFixed(2)} per unit · {state.quantity} units</p>
             </>
           ) : (
@@ -123,7 +123,7 @@ function PreviewPanel() {
         </div>
 
         <button disabled={state.step !== 6}
-          className="w-full py-3 rounded-lg text-sm font-medium text-white bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
+          className="w-full py-3 rounded-lg text-sm font-medium text-bg bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
           Submit quote →
         </button>
       </div>
@@ -135,7 +135,7 @@ function BuilderContent() {
   const { state } = useBuilder()
   return (
     <div className="min-h-screen bg-bg">
-      <div className="max-w-7xl mx-auto px-4 py-10">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 py-10">
         <div className="flex gap-10 items-start">
           {/* Steps column */}
           <div className="flex-1 min-w-0">

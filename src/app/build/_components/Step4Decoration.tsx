@@ -71,11 +71,11 @@ export default function Step4Decoration() {
   return (
     <div className="flex flex-col gap-7">
       <div>
-        <h2 className="text-white text-lg font-medium mb-1">Decoration</h2>
+        <h2 className="text-text-primary text-lg font-medium mb-1">Decoration</h2>
         <p className="text-text-muted text-sm">Choose how your logo or design will be applied.</p>
       </div>
       <div>
-        <p className="text-white text-sm font-medium mb-3">Technique</p>
+        <p className="text-text-primary text-sm font-medium mb-3">Technique</p>
         <div className="grid grid-cols-2 gap-3">
           {techniques.map(tech => {
             const add = getPriceAdd(tech)
@@ -83,8 +83,8 @@ export default function Step4Decoration() {
             return (
               <button key={tech.id} onClick={() => setSelectedTechId(tech.id)}
                 className={`text-left p-4 rounded-card border transition-all
-                  ${isSelected ? 'border-accent bg-accent/5' : 'border-border bg-raised hover:border-white/20'}`}>
-                <p className="text-white text-sm font-medium mb-1">{tech.name}</p>
+                  ${isSelected ? 'border-accent bg-accent/5' : 'border-border bg-raised hover:border-border'}`}>
+                <p className="text-text-primary text-sm font-medium mb-1">{tech.name}</p>
                 {tech.description && <p className="text-text-muted text-xs mb-2 line-clamp-2">{tech.description}</p>}
                 <span className={`text-xs px-2 py-0.5 rounded-full border
                   ${add === 0 ? 'border-green-500/30 text-green-400 bg-green-400/10' : 'border-amber-500/30 text-amber-400 bg-amber-400/10'}`}>
@@ -96,12 +96,12 @@ export default function Step4Decoration() {
         </div>
       </div>
       <div>
-        <p className="text-white text-sm font-medium mb-3">Placement</p>
+        <p className="text-text-primary text-sm font-medium mb-3">Placement</p>
         <div className="flex flex-wrap gap-2">
           {zones.map(zone => (
             <button key={zone.id} onClick={() => setSelectedZoneId(zone.id)}
               className={`px-4 py-2 rounded-full text-sm border transition-all
-                ${selectedZoneId === zone.id ? 'bg-accent border-accent text-white' : 'border-border text-text-muted hover:border-white/30 hover:text-white'}`}>
+                ${selectedZoneId === zone.id ? 'bg-accent border-accent text-text-primary' : 'border-border text-text-muted hover:border-border hover:text-text-primary'}`}>
               {zone.name}
             </button>
           ))}
@@ -109,17 +109,17 @@ export default function Step4Decoration() {
         {selectedZoneId && <p className="text-text-muted text-xs mt-2">Zone highlighted on garment preview →</p>}
       </div>
       <div>
-        <p className="text-white text-sm font-medium mb-3">Your logo</p>
+        <p className="text-text-primary text-sm font-medium mb-3">Your logo</p>
         <div onClick={() => fileInputRef.current?.click()}
-          className="border-2 border-dashed border-border rounded-card p-8 text-center cursor-pointer hover:border-white/30 transition-colors">
+          className="border-2 border-dashed border-border rounded-card p-8 text-center cursor-pointer hover:border-border transition-colors">
           {logoFile ? (
             <div>
-              <p className="text-white text-sm font-medium">{logoFile.name}</p>
+              <p className="text-text-primary text-sm font-medium">{logoFile.name}</p>
               <p className="text-text-muted text-xs mt-1">{(logoFile.size/1024).toFixed(0)}KB · Click to change</p>
             </div>
           ) : (
             <div>
-              <p className="text-white text-sm mb-1">Upload your logo</p>
+              <p className="text-text-primary text-sm mb-1">Upload your logo</p>
               <p className="text-text-muted text-xs">SVG, PNG or PDF · Max 10MB</p>
             </div>
           )}
@@ -131,9 +131,9 @@ export default function Step4Decoration() {
         <p className="text-text-muted text-xs mt-2">Optional — you can also email it after submitting.</p>
       </div>
       <div className="flex gap-3">
-        <button onClick={() => goToStep(3)} className="px-4 py-3 rounded-lg text-sm text-text-muted hover:text-white transition-colors">← Back</button>
+        <button onClick={() => goToStep(3)} className="px-4 py-3 rounded-lg text-sm text-text-muted hover:text-text-primary transition-colors">← Back</button>
         <button onClick={handleContinue} disabled={!selectedTechId || !selectedZoneId}
-          className="flex-1 py-3 rounded-lg text-sm font-medium text-white bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
+          className="flex-1 py-3 rounded-lg text-sm font-medium text-text-primary bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
           Continue →
         </button>
       </div>

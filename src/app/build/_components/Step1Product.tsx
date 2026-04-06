@@ -63,7 +63,7 @@ export default function Step1Product() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h2 className="text-white text-lg font-medium mb-1">Choose your product</h2>
+        <h2 className="text-text-primary text-lg font-medium mb-1">Choose your product</h2>
         <p className="text-text-muted text-sm">Select the garment you want to customise.</p>
       </div>
       {loading ? (
@@ -79,13 +79,13 @@ export default function Step1Product() {
             return (
               <button key={product.id} onClick={() => selectProduct(product)}
                 className={`text-left p-4 rounded-card border transition-all
-                  ${isSelected ? 'border-accent bg-accent/5' : 'border-border bg-raised hover:border-white/20'}`}>
+                  ${isSelected ? 'border-accent bg-accent/5' : 'border-border bg-raised hover:border-border'}`}>
                 <div className="w-10 h-10 mb-3 opacity-40">
                   <svg viewBox="0 0 40 40" fill="none">
-                    <path d="M8 12 L0 18 L8 21 L8 38 L32 38 L32 21 L40 18 L32 12 L26 8 Q20 5 14 8 Z" fill="currentColor" className="text-white" />
+                    <path d="M8 12 L0 18 L8 21 L8 38 L32 38 L32 21 L40 18 L32 12 L26 8 Q20 5 14 8 Z" fill="currentColor" className="text-text-primary" />
                   </svg>
                 </div>
-                <p className={`font-medium text-sm mb-1 ${isSelected ? 'text-white' : 'text-white/80'}`}>{product.name}</p>
+                <p className={`font-medium text-sm mb-1 ${isSelected ? 'text-text-primary' : 'text-text-primary/80'}`}>{product.name}</p>
                 <p className="text-text-muted text-xs capitalize">{product.category}</p>
                 {product.description && <p className="text-text-muted text-xs mt-1 line-clamp-2">{product.description}</p>}
               </button>
@@ -95,12 +95,12 @@ export default function Step1Product() {
       )}
       {selectedProduct && selectedProduct.variants.length > 1 && (
         <div>
-          <p className="text-white text-sm font-medium mb-2">Select fit</p>
+          <p className="text-text-primary text-sm font-medium mb-2">Select fit</p>
           <div className="flex flex-wrap gap-2">
             {selectedProduct.variants.map(variant => (
               <button key={variant.id} onClick={() => setSelectedVariantId(variant.id)}
                 className={`px-4 py-1.5 rounded-full text-sm border transition-all
-                  ${selectedVariantId === variant.id ? 'bg-accent border-accent text-white' : 'border-border text-text-muted hover:border-white/30 hover:text-white'}`}>
+                  ${selectedVariantId === variant.id ? 'bg-accent border-accent text-text-primary' : 'border-border text-text-muted hover:border-border hover:text-text-primary'}`}>
                 {variant.name}
               </button>
             ))}
@@ -108,7 +108,7 @@ export default function Step1Product() {
         </div>
       )}
       <button onClick={handleContinue} disabled={!selectedProduct || !selectedVariantId}
-        className="w-full py-3 rounded-lg text-sm font-medium text-white bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
+        className="w-full py-3 rounded-lg text-sm font-medium text-text-primary bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
         Continue →
       </button>
     </div>

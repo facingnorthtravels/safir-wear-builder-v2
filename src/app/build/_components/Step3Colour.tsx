@@ -38,7 +38,7 @@ export default function Step3Colour() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h2 className="text-white text-lg font-medium mb-1">Choose a colour</h2>
+        <h2 className="text-text-primary text-lg font-medium mb-1">Choose a colour</h2>
         <p className="text-text-muted text-sm">All colours available from MOQ 50 unless noted.</p>
       </div>
       <div className="flex flex-wrap gap-3">
@@ -49,7 +49,7 @@ export default function Step3Colour() {
               ${selectedId === colour.id ? 'ring-2 ring-white ring-offset-2 ring-offset-bg scale-110' : 'hover:scale-105'}
               ${isLight(colour.hex) ? 'border border-border' : ''}`}
               style={{ backgroundColor: colour.hex }} />
-            <span className="text-[10px] text-text-muted group-hover:text-white transition-colors max-w-[48px] text-center leading-tight">
+            <span className="text-[10px] text-text-muted group-hover:text-text-primary transition-colors max-w-[48px] text-center leading-tight">
               {colour.name}
             </span>
           </button>
@@ -60,7 +60,7 @@ export default function Step3Colour() {
           <div className={`w-8 h-8 rounded-full flex-shrink-0 ${isLight(selected.hex) ? 'border border-border' : ''}`}
             style={{ backgroundColor: selected.hex }} />
           <div>
-            <p className="text-white text-sm font-medium">{selected.name}</p>
+            <p className="text-text-primary text-sm font-medium">{selected.name}</p>
             {selected.pantone && <p className="text-text-muted text-xs">Pantone: {selected.pantone}</p>}
           </div>
           {selected.moq_override && (
@@ -71,9 +71,9 @@ export default function Step3Colour() {
         </div>
       )}
       <div className="flex gap-3">
-        <button onClick={() => goToStep(2)} className="px-4 py-3 rounded-lg text-sm text-text-muted hover:text-white transition-colors">← Back</button>
+        <button onClick={() => goToStep(2)} className="px-4 py-3 rounded-lg text-sm text-text-muted hover:text-text-primary transition-colors">← Back</button>
         <button onClick={handleContinue} disabled={!selectedId}
-          className="flex-1 py-3 rounded-lg text-sm font-medium text-white bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
+          className="flex-1 py-3 rounded-lg text-sm font-medium text-text-primary bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
           Continue →
         </button>
       </div>

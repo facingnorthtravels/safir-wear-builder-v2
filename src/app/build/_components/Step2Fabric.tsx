@@ -43,7 +43,7 @@ export default function Step2Fabric() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h2 className="text-white text-lg font-medium mb-1">Choose your fabric</h2>
+        <h2 className="text-text-primary text-lg font-medium mb-1">Choose your fabric</h2>
         <p className="text-text-muted text-sm">All fabrics are 80% cotton, 20% polyester unless noted.</p>
       </div>
       <div className="flex flex-col gap-3">
@@ -55,10 +55,10 @@ export default function Step2Fabric() {
           return (
             <button key={fabric.id} onClick={() => setSelectedId(fabric.id)}
               className={`text-left p-4 rounded-card border transition-all w-full
-                ${isSelected ? 'border-accent bg-accent/5' : 'border-border bg-raised hover:border-white/20'}`}>
+                ${isSelected ? 'border-accent bg-accent/5' : 'border-border bg-raised hover:border-border'}`}>
               <div className="flex items-start justify-between gap-4 mb-3">
                 <div>
-                  <p className="text-white font-medium text-sm">{fabric.name}</p>
+                  <p className="text-text-primary font-medium text-sm">{fabric.name}</p>
                   <p className="text-text-muted text-xs mt-0.5">{fabric.composition}</p>
                 </div>
                 {isSelected && <span className="text-accent text-xs font-medium">Selected ✓</span>}
@@ -77,9 +77,9 @@ export default function Step2Fabric() {
         })}
       </div>
       <div className="flex gap-3">
-        <button onClick={() => goToStep(1)} className="px-4 py-3 rounded-lg text-sm text-text-muted hover:text-white transition-colors">← Back</button>
+        <button onClick={() => goToStep(1)} className="px-4 py-3 rounded-lg text-sm text-text-muted hover:text-text-primary transition-colors">← Back</button>
         <button onClick={handleContinue} disabled={!selectedId}
-          className="flex-1 py-3 rounded-lg text-sm font-medium text-white bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
+          className="flex-1 py-3 rounded-lg text-sm font-medium text-text-primary bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
           Continue →
         </button>
       </div>
