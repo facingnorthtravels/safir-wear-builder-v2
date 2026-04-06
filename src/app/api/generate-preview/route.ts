@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
 5. Photorealistic fashion photography quality only.`
 
     const model = genAI.getGenerativeModel({
-      model: 'gemini-2.0-flash-preview-image-generation',
+      model: 'gemini-2.5-flash-image',
       generationConfig: {
         responseModalities: ['TEXT', 'IMAGE'],
       } as any,
