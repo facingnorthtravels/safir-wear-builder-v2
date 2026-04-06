@@ -138,7 +138,7 @@ function BuilderContent() {
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-10">
         <div className="flex gap-10 items-start">
           {/* Steps column */}
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 min-w-0 overflow-hidden">
             <StepNav />
             {state.step === 1 && <Step1Product />}
             {state.step === 2 && <Step2Fabric />}

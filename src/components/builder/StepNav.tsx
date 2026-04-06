@@ -30,7 +30,7 @@ export default function StepNav() {
                 `}
               >
                 <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0
-                  ${active ? 'bg-accent text-text-primary' : ''}
+                  ${active ? 'bg-accent text-bg' : ''}
                   ${done ? 'bg-accent/20 text-accent' : ''}
                   ${!active && !done ? 'bg-raised text-text-muted' : ''}
                 `}>

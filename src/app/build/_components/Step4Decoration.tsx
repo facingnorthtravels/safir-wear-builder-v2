@@ -101,7 +101,7 @@ export default function Step4Decoration() {
           {zones.map(zone => (
             <button key={zone.id} onClick={() => setSelectedZoneId(zone.id)}
               className={`px-4 py-2 rounded-full text-sm border transition-all
-                ${selectedZoneId === zone.id ? 'bg-accent border-accent text-text-primary' : 'border-border text-text-muted hover:border-border hover:text-text-primary'}`}>
+                ${selectedZoneId === zone.id ? 'bg-accent border-accent text-bg' : 'border-border text-text-muted hover:border-border hover:text-text-primary'}`}>
               {zone.name}
             </button>
           ))}
@@ -133,7 +133,7 @@ export default function Step4Decoration() {
       <div className="flex gap-3">
         <button onClick={() => goToStep(3)} className="px-4 py-3 rounded-lg text-sm text-text-muted hover:text-text-primary transition-colors">← Back</button>
         <button onClick={handleContinue} disabled={!selectedTechId || !selectedZoneId}
-          className="flex-1 py-3 rounded-lg text-sm font-medium text-text-primary bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
+          className="flex-1 py-3 rounded-lg text-sm font-medium text-bg bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
           Continue →
         </button>
       </div>

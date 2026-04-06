@@ -100,7 +100,7 @@ export default function Step1Product() {
             {selectedProduct.variants.map(variant => (
               <button key={variant.id} onClick={() => setSelectedVariantId(variant.id)}
                 className={`px-4 py-1.5 rounded-full text-sm border transition-all
-                  ${selectedVariantId === variant.id ? 'bg-accent border-accent text-text-primary' : 'border-border text-text-muted hover:border-border hover:text-text-primary'}`}>
+                  ${selectedVariantId === variant.id ? 'bg-accent border-accent text-bg' : 'border-border text-text-muted hover:border-border hover:text-text-primary'}`}>
                 {variant.name}
               </button>
             ))}
@@ -108,7 +108,7 @@ export default function Step1Product() {
         </div>
       )}
       <button onClick={handleContinue} disabled={!selectedProduct || !selectedVariantId}
-        className="w-full py-3 rounded-lg text-sm font-medium text-text-primary bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
+        className="w-full py-3 rounded-lg text-sm font-medium text-bg bg-accent transition-opacity disabled:opacity-30 disabled:cursor-not-allowed hover:enabled:opacity-90">
         Continue →
       </button>
     </div>
